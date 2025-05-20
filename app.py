@@ -15,10 +15,13 @@ app = Flask(__name__)
 def index():
     return(render_template("index.html"))
 
-
 @app.route("/main", methods=["GET", "POST"])
 def main():
+    if request.method == "GET":
+        return render_template("main.html")
     uname = request.form.get("q")
+    if not uname or uname.strip() == "":
+        return render_template("index.html", error="Please enter a valid username.")
     print(uname)
     t = datetime.datetime.now()
     conn = sqlite3.connect('user.db')
@@ -27,7 +30,7 @@ def main():
     conn.commit()
     c.close()
     conn.close()
-    return render_template("main.html")  # Ensure this file exists
+    return render_template("main.html")
 
 @app.route("/gemini",methods=["GET","POST"])
 def gemini():
