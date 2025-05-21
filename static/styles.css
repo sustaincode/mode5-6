@@ -9,7 +9,18 @@ body {
     align-items: center;
     height: 100vh;
 }
-
+.output-board {
+    border: 1px solid #888;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-top: 16px;
+    background: #fafbfc;
+    display: inline-block;
+}
+.output-text {
+    font-size: 0.9em;
+    margin: 2px 0;
+}
 .container {
     background-color: #ffffff;
     padding: 30px;
