@@ -10,7 +10,7 @@ import requests
 gemini_api_key = os.getenv("gemini_api_key")
 genai.configure(api_key=gemini_api_key)
 model = genai.GenerativeModel("gemini-2.0-flash")
-telegram = os.getenv("telegram")
+telegram_api = os.getenv("telegram_api")
 domain_url = os.getenv('WEBHOOK_URL')
 
 
@@ -29,13 +29,15 @@ def paynow():
 
 @app.route("/start_telegram",methods=["GET","POST"])
 def start_telegram():
-    #domain_url = os.getenv('WEBHOOK_URL')
-    print("WEBHOOK_URL:", domain_url)
-    print("TELEGRAM TOKEN:", telegram)
-    delete_webhook_url = f"https://api.telegram.org/bot{telegram}/deleteWebhook"
+
+    domain_url = os.getenv('WEBHOOK_URL')
+
+    # The following line is used to delete the existing webhook URL for the Telegram bot
+    delete_webhook_url = f"https://api.telegram.org/bot{telegram_api}/deleteWebhook"
     requests.post(delete_webhook_url, json={"url": domain_url, "drop_pending_updates": True})
-    set_webhook_url = f"https://api.telegram.org/bot{telegram}/setWebhook?url={domain_url}/telegram"
-   
+    
+    # Set the webhook URL for the Telegram bot
+    set_webhook_url = f"https://api.telegram.org/bot{telegram_api}/setWebhook?url={domain_url}/telegram"
     webhook_response = requests.post(set_webhook_url, json={"url": domain_url, "drop_pending_updates": True})
     print('webhook:', webhook_response)
     if webhook_response.status_code == 200:
