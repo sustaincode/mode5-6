@@ -3,3 +3,4 @@ gunicorn
 google-generativeai
 pysqlite3
 requests
+google-genai
