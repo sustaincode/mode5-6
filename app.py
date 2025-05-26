@@ -1,21 +1,22 @@
 from flask import Flask,request,render_template
 from google import genai
-import google.generativeai as genai
+import google.generativeai as genai1
 import os
 import sqlite3
 import datetime
 import requests
 
 
+
 gemini_api_key = os.getenv("gemini_api_key")
-#genai.configure(api_key=gemini_api_key)
-#model = genai.GenerativeModel("gemini-2.0-flash")
+genai1.configure(api_key=gemini_api_key)
+model = genai1.GenerativeModel("gemini-2.0-flash")
 telegram_api = os.getenv("telegram_api")
 domain_url = os.getenv('WEBHOOK_URL')
 
 ### Initialize the Google Gemini client
-genmini_client = genai.Client(api_key=gemini_api_key)
-genmini_model = "gemini-2.0-flash"
+gemini_client = genai.Client(api_key=gemini_api_key)
+gemini_model = "gemini-2.0-flash"
 
 
 app = Flask(__name__)
