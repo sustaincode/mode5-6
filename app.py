@@ -10,7 +10,7 @@ gemini_api_key = os.getenv("gemini_api_key")
 genai.configure(api_key=gemini_api_key)
 model = genai.GenerativeModel("gemini-2.0-flash")
 telegram = os.getenv("telegram")
-set_webhook_url = f"https://api.telegram.org/bot{telegram}/setWebhook?url={domain_url}/telegram"
+#set_webhook_url = f"https://api.telegram.org/bot{telegram}/setWebhook?url={domain_url}/telegram"
 
 
 app = Flask(__name__)
@@ -24,7 +24,7 @@ def index():
 def paynow():
     return render_template("paynow.html")
 
-@app.route("/telegram",methods=["GET","POST"])
+@app.route("/start_telegram",methods=["GET","POST"])
 def start_telegram():
     domain_url = os.getenv('WEBHOOK_URL')
     print("WEBHOOK_URL:", domain_url)
