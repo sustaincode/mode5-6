@@ -18,7 +18,17 @@ def index():
 def paynow():
     return render_template("paynow.html")
 
-
+@app.route("/prediction", methods=["GET", "POST"])
+def prediction():
+    prediction = None
+    if request.method == "POST":
+        sgd_value = request.form.get("q")
+        try:
+            sgd_value = float(sgd_value)
+            prediction = 90.2 + (-50.6 * sgd_value)
+        except (TypeError, ValueError):
+            prediction = "XXX"
+    return render_template("prediction.html", prediction=prediction)
 
 
 @app.route("/main", methods=["GET", "POST"])

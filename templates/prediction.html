@@ -1,0 +1,23 @@
+<head>
+    <meta name ="viewport" content ="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
+</head>
+<body>
+    <div class="container">
+        <h2>DBS Stock Value Predictor</h2>
+        <form action="/prediction" method="post">
+            <label for="sgd_input">Please enter the exchange rate USD to SGD:</label>
+            <input type="number" step="any" name="q" id="sgd_input" required>
+            <input type="submit" value="Predict">
+        </form>
+        {% if prediction %}
+        <div class="prediction-box">
+            <label>Predicted DBS Stock value:</label>
+            <textarea readonly rows="1" class="prediction-text">{{ prediction }}</textarea>
+        </div>
+        {% endif %}
+        <form action="/main" method="get">        
+            <input type="submit" value="Main">
+        </form>
+    </div>
+</body>
