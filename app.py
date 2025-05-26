@@ -37,12 +37,14 @@ def start_telegram():
     set_webhook_url = f"https://api.telegram.org/bot{telegram}/setWebhook?url={domain_url}/telegram"
    
     webhook_response = requests.post(set_webhook_url, json={"url": domain_url, "drop_pending_updates": True})
-    print('webhook:', webhook_response.text)
+    print('webhook:', webhook_response)
     if webhook_response.status_code == 200:
-        status = "The telegram bot is running. Please check with the telegram bot."
+        # set status message
+        status = "The telegram bot is running. Please check with the telegram bot. @gemini_tt_bot"
     else:
         status = "Failed to start the telegram bot. Please check the logs."
-    return render_template("telegram.html", status=status)
+    
+    return(render_template("telegram.html", status=status))
 
 @app.route("/telegram", methods=["GET", "POST"])
 def telegram():
