@@ -76,6 +76,18 @@ def telegram():
         requests.post(send_message_url, data={"chat_id": chat_id, "text": r_text})
 
     return('ok', 200)
+@app.route("/stop_telegram", methods=["GET", "POST"])
+def stop_telegram():
+    domain_url = os.getenv('WEBHOOK_URL')
+    # Call Telegram API to delete the webhook
+    delete_webhook_url = f"https://api.telegram.org/bot{telegram_api}/deleteWebhook"
+    response = requests.post(delete_webhook_url, json={"url": domain_url, "drop_pending_updates": True})
+    print('delete webhook:', response.text)
+    if response.status_code == 200:
+        status = "The telegram bot has been stopped (webhook deleted)."
+    else:
+        status = "Failed to stop the telegram bot. Please check the logs."
+    return render_template("telegram.html", status=status)
 
 @app.route("/prediction", methods=["GET", "POST"])
 def prediction():
