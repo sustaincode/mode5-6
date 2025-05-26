@@ -45,7 +45,7 @@ def start_telegram():
     print('webhook:', webhook_response)
     if webhook_response.status_code == 200:
         # set status message
-        status = "The telegram bot is running. Please check with the telegram bot. @gemini_tt_bot"
+        status = "The telegram bot is running. Please check with the telegram bot. @mod5-6-gemini"
     else:
         status = "Failed to start the telegram bot. Please check the logs."
     
@@ -65,8 +65,8 @@ def telegram():
             # Process the message and generate a response
             system_prompt = "You are a financial expert.  Answer ONLY questions related to finance, economics, investing, and financial markets. If the question is not related to finance, state that you cannot answer it."
             prompt = f"{system_prompt}\n\nUser Query: {text}"
-            r = genmini_client.models.generate_content(
-                model=genmini_model,
+            r = gemini_client.models.generate_content(
+                model=gemini_model,
                 contents=prompt
             )
             r_text = r.text
