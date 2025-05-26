@@ -11,7 +11,9 @@ gemini_api_key = os.getenv("gemini_api_key")
 genai.configure(api_key=gemini_api_key)
 model = genai.GenerativeModel("gemini-2.0-flash")
 telegram = os.getenv("telegram")
-#set_webhook_url = f"https://api.telegram.org/bot{telegram}/setWebhook?url={domain_url}/telegram"
+domain_url = os.getenv('WEBHOOK_URL')
+
+
 
 
 app = Flask(__name__)
@@ -27,16 +29,17 @@ def paynow():
 
 @app.route("/start_telegram",methods=["GET","POST"])
 def start_telegram():
-    domain_url = os.getenv('WEBHOOK_URL')
+    #domain_url = os.getenv('WEBHOOK_URL')
     print("WEBHOOK_URL:", domain_url)
     print("TELEGRAM TOKEN:", telegram)
     delete_webhook_url = f"https://api.telegram.org/bot{telegram}/deleteWebhook"
     requests.post(delete_webhook_url, json={"url": domain_url, "drop_pending_updates": True})
     set_webhook_url = f"https://api.telegram.org/bot{telegram}/setWebhook?url={domain_url}/telegram"
+   
     webhook_response = requests.post(set_webhook_url, json={"url": domain_url, "drop_pending_updates": True})
     print('webhook:', webhook_response.text)
     if webhook_response.status_code == 200:
-        status = "The telegram bot is running. Please check with the telegram bot. @gemini_tt_bot"
+        status = "The telegram bot is running. Please check with the telegram bot."
     else:
         status = "Failed to start the telegram bot. Please check the logs."
     return render_template("telegram.html", status=status)
